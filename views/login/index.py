@@ -5,7 +5,7 @@ from tornado_lib.routes import route
 from views.base_api_handler import BaseAPIHandler as BaseHandler
 
 
-@route('/auth/login')
+@route('/login')
 class login(BaseHandler):
     def get(self):
-        self.render('index.html', title="This is a test")
+        self.render('login.html', title="登陆 - ")

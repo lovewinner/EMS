@@ -5,7 +5,10 @@ var path = require('path');
 module.exports = {
   context: path.join(__dirname, "src"),
   devtool: debug ? "inline-sourcemap" : false,
-  entry: "./js/index.js",
+  entry: {
+    main: "./js/index.js",
+    login: "./js/Login.js"
+  },
   module: {
     loaders: [
       {
@@ -21,10 +24,12 @@ module.exports = {
   },
   output: {
     path: __dirname + "/static/",
-    filename: "main.min.js"
+    filename: "[name].min.js",
+    chunkFilename: "[name].chunk.js"
   },
   plugins: debug ? [] : [
     new webpack.optimize.DedupePlugin(),
+    new CommonsChunkPlugin("common.js", ["index", "Login"]),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
   ],
