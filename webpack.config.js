@@ -6,13 +6,13 @@ module.exports = {
   context: path.join(__dirname, "src"),
   devtool: debug ? "inline-sourcemap" : false,
   entry: {
-    main: "./js/index.js",
-    login: "./js/Login.js"
+    app: "./js/index.jsx",
+    login: "./js/Login.jsx",
   },
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|jsx)?$/,
         exclude: /(node_modules|bower_components)/,
         loader: 'babel-loader',
         query: {
@@ -27,8 +27,11 @@ module.exports = {
     filename: "[name].min.js",
     chunkFilename: "[name].chunk.js"
   },
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
   plugins: debug ? [
-    new webpack.optimize.CommonsChunkPlugin("common"),
+    new webpack.optimize.CommonsChunkPlugin({name: 'common', filename: 'common.bundle.js'}),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
   ] : [],

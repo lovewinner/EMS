@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch": "./node_modules/.bin/webpack webpack.config.json --watch"
+    "dev": "./node_modules/.bin/webpack --watch"
   },
   "dependencies": {
     "axios": "^0.18.0",

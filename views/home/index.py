@@ -11,7 +11,7 @@ class home(BaseHandler):
         message = self.test("Hello World")
 
         rst = {
-            "title": "This is a test",
+            "title": "首页 - ",
             "message": message
         }
         self.render('layout.html', data = rst)

@@ -8,4 +8,7 @@ from views.base_api_handler import BaseAPIHandler as BaseHandler
 @route('/login')
 class login(BaseHandler):
     def get(self):
-        self.render('login.html', title="登陆 - ")
+        rst = {
+            "title": "登录 - "
+        }
+        self.render('login.html', data = rst)

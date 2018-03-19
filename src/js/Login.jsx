@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import Loading from "./Components/Loading/Loading";
 
 class Login extends React.Component {
     constructor() {
@@ -9,6 +10,7 @@ class Login extends React.Component {
                 login_url: '/login/authentication',
                 username_valid: false,
                 password_valid: false,
+                loading: false,
                 action: 'LOGIN'
             },
             form: {
@@ -21,6 +23,16 @@ class Login extends React.Component {
     formSubmit = (e) => {
         e.preventDefault()
         const { username, password, action } = e.target;
+
+        this.setState({
+            settings: {...this.state.settings, loading: true, username_valid: false, password_valid: false}
+        })
+        setTimeout(() => {
+            this.setState({
+                settings: { ...this.state.settings, loading: false, username_valid: true, password_valid: true }
+            })
+            Materialize.toast('账号或密码错误，请重新登录！', 4000)
+        }, 3000);
         console.log({
             username: username.value,
             password: password.value,
@@ -105,8 +117,9 @@ class Login extends React.Component {
                         <div class="row">
                             <div class="input-field col s12">
                                 <button class={class_names_submit} type="submit" name="action" value={action}>登陆
-                                  <i class="material-icons right">send</i>
+                                    <i class="material-icons right">send</i>
                                 </button>
+                                <Loading loading={this.state.settings.loading}/>
                             </div>
                         </div>
                     </form>
