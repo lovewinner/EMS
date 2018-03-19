@@ -27,10 +27,9 @@ module.exports = {
     filename: "[name].min.js",
     chunkFilename: "[name].chunk.js"
   },
-  plugins: debug ? [] : [
-    new webpack.optimize.DedupePlugin(),
-    new CommonsChunkPlugin("common.js", ["index", "Login"]),
+  plugins: debug ? [
+    new webpack.optimize.CommonsChunkPlugin("common"),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
-  ],
+  ] : [],
 };
