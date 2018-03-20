@@ -41,7 +41,7 @@ module.exports = {
     publicPath: '/static'
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.js', '.jsx', '.css']
   },
   plugins: debug ? [
     new webpack.optimize.CommonsChunkPlugin({name: 'common', filename: 'common.bundle.js'}),
