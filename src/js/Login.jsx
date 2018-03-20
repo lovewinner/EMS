@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Loading from "./Components/Loading/Loading";
+import bannerURL from '../images/google.png'
 
 class Login extends React.Component {
     constructor() {
@@ -64,7 +65,7 @@ class Login extends React.Component {
             <div class="row">
                 <div class="card middle col s4 offset-s4" style={{marginTop: "10%"}}>
                     <div class="card-image" style={cardImageStyle}>
-                        <img src="static/google.png" />
+                        <img src={bannerURL} />
                         <div class="card-title">
                             <h4>登陆</h4>
                             <h5 style={{fontSize: ".83em"}}>动力工程系试验管理平台</h5>
