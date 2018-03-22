@@ -12,3 +12,11 @@ class login(BaseHandler):
             "title": "登录 - "
         }
         self.render('login.html', data = rst)
+
+@route('/logout')
+class logout(BaseHandler):
+    def get(self):
+        rst = {
+            "title": "登录 - "
+        }
+        self.render('login.html', data = rst)

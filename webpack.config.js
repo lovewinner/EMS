@@ -41,11 +41,11 @@ module.exports = {
     publicPath: '/static'
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.css']
+    extensions: ['.js', '.jsx', '.css', '.sass']
   },
-  plugins: debug ? [
+  plugins: debug ? [ ] : [
     new webpack.optimize.CommonsChunkPlugin({name: 'common', filename: 'common.bundle.js'}),
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
-  ] : [],
+  ],
 };

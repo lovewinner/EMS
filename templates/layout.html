@@ -5,11 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{{data['title']}}华北电力大学动力系实验管理平台</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/css/materialize.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f4f3f4;
+            font-family: 'Roboto',sans-serif;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+            letter-spacing: .05em;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
 
     <div id="app"></div>
-    <script type="text/javascript" src="{{ static_url('common.bundle.js') }}"></script>
+    <script src='{{ static_url("vendors/jquery.min.js") }}'></script>
+    <script src='{{ static_url("vendors/materialize.min.js") }}'></script>
+    <!-- <script type="text/javascript" src="{{ static_url('common.bundle.js') }}"></script> -->
     <script type="text/javascript" src="{{ static_url('app.min.js') }}"></script>
 </body>
 </html>

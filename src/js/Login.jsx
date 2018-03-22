@@ -54,7 +54,7 @@ class Login extends React.Component {
         }
 
         const class_names_submit = (() => {
-            let classNmaes = 'btn waves-effect waves-light right '
+            let classNmaes = 'btn waves-effect waves-light blue accent-2 right '
             if (!username_valid || !password_valid) {
                 classNmaes += 'disabled'
             }
@@ -120,7 +120,7 @@ class Login extends React.Component {
                                 <button class={class_names_submit} type="submit" name="action" value={action}>登陆
                                     <i class="material-icons right">send</i>
                                 </button>
-                                <Loading loading={this.state.settings.loading}/>
+                                <Loading loading={this.state.settings.loading} size="small"/>
                             </div>
                         </div>
                     </form>

@@ -11,7 +11,8 @@ export default class Loading extends React.Component {
     render() {
 
         const class_names_loading = (() => {
-            let classNames = 'preloader-wrapper small right '
+            let classNames = 'preloader-wrapper right '
+            classNames += this.props.size + ' '
             classNames += this.props.loading ? 'active ' : ' '
 
             return classNames
