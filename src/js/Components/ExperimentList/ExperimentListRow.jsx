@@ -11,31 +11,77 @@ export default class ExperimentListRow extends React.Component {
         this.state = {
             settings: {
                 BOOK_ERROR_MSG: '请选择你的实验时间, 再提交预约申请!',
-                BOOK_SUCCESS_MSG: '预约成功, 请进入在线学习页面！'
+                BOOK_SUCCESS_MSG: '预约成功, 请进入在线学习页面！',
+                DropDownMenu_disabled: false
             },
             default_value: {
                 name: '边界层实验',
                 location: '教四 303',
                 times: ['1521644070840', '1521644182665'],
                 time_selected: 0,
-                status: 0,
+                status: false,
+                experiment_id: 0
             }
         }
 
     }
 
-    bookExperiment = () => {
-        const { BOOK_ERROR_MSG, BOOK_SUCCESS_MSG } = this.state.settings
-        let message = ''
+    componentWillMount() {
+        const { name, locaton, time_selected } = this.state.default_value
+        const { default_value } = this.state
+        this.setState({
+            ...this.state,
+            default_value: {
+                ...default_value,
+                experiment_id: this.props.experiment_id
+            }
+        })
+    }
 
-        if (this.state.default_value.time_selected == 0) {
-            message = BOOK_ERROR_MSG
+    componentWillUnmount() {
+        emitter.removeAllListeners()
+    }
+
+    studyExperiment = () => {
+        console.log(this.state.default_value.experiment_id)
+    }
+
+    bookExperiment = () => {
+        const { name, location, time_selected, experiment_id } = this.state.default_value
+        const { BOOK_ERROR_MSG, BOOK_SUCCESS_MSG } = this.state.settings
+        let request = {}
+
+        if (this.state.default_value.time_selected !== 0) {
+            request = {
+                type: 'CONFIRM',
+                payload: {
+                    name,
+                    location,
+                    time_selected,
+                    experiment_id
+                }
+            }
+            this.eventEmitter = emitter.addListener('CONFIRM_RECEIVED', () => {
+                this.setState({
+                    ...this.state,
+                    default_value: {
+                        ...this.state.default_value,
+                        status: true
+                    },
+                    settings: {
+                        ...this.state.settings,
+                        DropDownMenu_disabled: true
+                    }
+                })
+            })
         }
         else {
-            message = BOOK_SUCCESS_MSG
+            request = {
+                type: 'ERROR',
+                message: BOOK_ERROR_MSG
+            }
         }
-
-        emitter.emit("ALERT", message)
+        emitter.emit(request.type, request)
     }
 
     render() {
@@ -43,8 +89,8 @@ export default class ExperimentListRow extends React.Component {
             textAlign: "center",
             padding: '0'
         }
-
-        const { default_value } = this.state
+        
+        const { settings, default_value } = this.state
 
         return(
             <TableRow>
@@ -54,6 +100,7 @@ export default class ExperimentListRow extends React.Component {
                     <DropDownMenu
                         ref="TimeMenu"
                         value={default_value.time_selected}
+                        disabled={settings.DropDownMenu_disabled}
                         onChange={(event, index, value) => {
                             this.setState(
                                 {
@@ -64,7 +111,6 @@ export default class ExperimentListRow extends React.Component {
                                     }
                                 }
                             )
-                            console.log(this.state)
                         }}
                         labelStyle= {{
                             fontSize: '13px'
@@ -80,7 +126,9 @@ export default class ExperimentListRow extends React.Component {
                     </DropDownMenu>
                 </TableRowColumn>
                 <TableRowColumn style={TableRowColumnStyle}>
-                    <FlatButton label="预约" primary={true} onClick={this.bookExperiment.bind(this)}/>
+                    {default_value.status ?
+                        <FlatButton label="学习" primary={true} onClick={this.studyExperiment.bind(this)} /> :
+                        <FlatButton label="预约" primary={true} onClick={this.bookExperiment.bind(this)} />}
                 </TableRowColumn>
             </TableRow>
         )

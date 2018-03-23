@@ -22,10 +22,10 @@ export default class Nav extends React.Component {
                     <span>
                         <Chip
                             onRequestDelete={() => {}}
-                            style={{margin:".5em 1em"}}
+                            style={{margin:".5em 1em", fontWeight: 'bold'}}
                         >
-                            <Avatar size={32} >A</Avatar>
-                            Alienover
+                            <Avatar size={32}  >A</Avatar>
+                            木村拓哉
                         </Chip>
                     </span>
                     }

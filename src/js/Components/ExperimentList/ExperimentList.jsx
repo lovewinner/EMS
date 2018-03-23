@@ -32,12 +32,13 @@ export default class ExperimentList extends React.Component {
             default_value: {
                 dialog_open: false,
                 dialog_message: '',
-                class_name: '流体力学'
+                class_name: '流体力学',
+                experiment_id: ['1022', '23231']
             }
         };
     }
     
-    componentWillMount = function () {
+    componentWillMount() {
         const { default_value } = this.state
         this.setState({
             ...this.state,
@@ -98,7 +99,10 @@ export default class ExperimentList extends React.Component {
                         <TableBody
                             displayRowCheckbox={table_settings.showCheckboxes}
                         >
-                            <ExperimentListRow />
+                            {default_value.experiment_id.map((value, index) => 
+                                <ExperimentListRow key={index} experiment_id={value}/>
+                            )}
+                            
                         </TableBody>
                     </Table>
                 </Card>
