@@ -1,0 +1,10 @@
+.learning_card {
+    padding: 20px 15px 0 15px !important;
+}
+.learning_card * {
+    padding: 5px 0
+}
+.learning_card div:first-of-type {
+     font-size: 18px !important;
+     font-weight: bold;
+}

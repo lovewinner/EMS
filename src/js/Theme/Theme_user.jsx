@@ -21,6 +21,7 @@ export default {
     },
     FlatButton: {
         fontWeight: 'bold',
+        verticalAlign: 'none',
     },
     spacing: spacing,
     fontFamily: '"Noto Sans SC", Roboto, sans-serif',
@@ -41,5 +42,6 @@ export default {
         pickerHeaderColor: cyan500,
         clockCircleColor: fade(darkBlack, 0.07),
         shadowColor: fullBlack,
+        verticalAlign: 'none',
     },
 };

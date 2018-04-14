@@ -80,7 +80,6 @@ export default class LearningPanel extends React.Component {
             width: '200px',
             height: '200px',
             margin: '5px 10px',
-            color: 'white!important' 
         }
 
 
@@ -96,14 +95,14 @@ export default class LearningPanel extends React.Component {
                     {reservations_list.map((value, index) => {
                         const time = this.timeFormat(value.time_selected)
                         return (<Card key={index} style={cardStyle}>
-                                    <CardText>
-                                        <div style={{ fontSize: "14px", padding: "2px 0", color: '#565656'  }}><b>{value.name}</b></div>
-                                        <div style={{ fontSize: "14px", padding: "2px 0", color: 'rgba(0,0,0, .654)'  }}><b>{value.location}</b></div>
-                                        <div style={{ fontSize: "16px", padding: "5px 0", color: 'rgba(0,0,0, .654)' }}>{time.localDateString}</div>
-                                        <div style={{ fontSize: "16px", padding: "2px 0", color: 'rgba(0,0,0, .654)' }}>{time.dayTime}</div>
+                                    <CardText class="learning_card">
+                                        <div>{value.name}</div>
+                                        <div>{value.location}</div>
+                                        <div>{time.localDateString}</div>
+                                        <div>{time.dayTime}</div>
                                     </CardText>
-                                    <CardActions style={{ float: 'right' }}>
-                                        <FlatButton label="学习" primary={true} value={value.experiment_id} onClick={this.studyExperiment.bind(this, value.experiment_id)} labelStyle={{color: "#3a75d7"}}/>
+                                    <CardActions style={{ display: 'flex', flexDirection: 'row-reverse'}}>
+                                        <FlatButton label="学习" primary={true} value={value.experiment_id} onClick={this.studyExperiment.bind(this, value.experiment_id)} labelStyle={{color: "#3a75d7", verticalAlign: 'none'}}/>
                                     </CardActions>
                                 </Card>)
                     })}

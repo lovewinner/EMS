@@ -1,6 +1,6 @@
-var debug = process.env.NODE_ENV !== "production";
-var webpack = require('webpack');
-var path = require('path');
+const debug = process.env.NODE_ENV !== "production";
+const webpack = require('webpack');
+const path = require('path');
 
 module.exports = {
   context: path.join(__dirname, "src"),
@@ -21,6 +21,10 @@ module.exports = {
         }
       },
       {
+        test: /\.(css)(\?.*)?$/,
+        loader: 'style-loader!css-loader'
+      },
+      {
         test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
         use: [
           {
@@ -31,6 +35,13 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.(ttf|eot|woff|woff2)$/,
+        loader: "file-loader",
+        options: {
+          name: '/fonts/[hash].[ext]',
+        }
       }
     ]
   },
