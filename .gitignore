@@ -1,2 +1,4 @@
 # ignore node modules folders
 node_modules/*
+
+.DS_Store
