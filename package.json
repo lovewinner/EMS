@@ -21,6 +21,7 @@
     "events": "^2.0.0",
     "history": "^4.7.2",
     "material-ui": "^0.20.0",
+    "moment": "^2.22.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.7",

@@ -16,7 +16,7 @@ import spacing from 'material-ui/styles/spacing'
  */
 export default {
     appBar: {
-        height: 48,
+        height: 56,
         color: "#2c5cd0",
     },
     FlatButton: {

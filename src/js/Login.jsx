@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom'
 import Loading from "./Components/Loading/Loading";
 import BannerURL from '../images/google.png'
 
-import '../css/vendor_css'
+import '../css/materialize.min'
+import '../css/fonts'
 
 class Login extends React.Component {
     constructor() {

@@ -4,11 +4,16 @@ import DropDownMenu from 'material-ui/DropDownMenu'
 import FlatButton from 'material-ui/FlatButton'
 import MenuItem from 'material-ui/MenuItem'
 import emitter from '../../Actions/EventEmitterAction'
+import Moment from 'moment'
 
 export default class ExperimentListRow extends React.Component {
     constructor() {
         super()
         this.state = {
+            user: {
+                user_id: 12345,
+                user_name: '木村拓哉'
+            },
             settings: {
                 BOOK_ERROR_MSG: '请选择你的实验时间, 再提交预约申请!',
                 BOOK_SUCCESS_MSG: '预约成功, 请进入在线学习页面！',
@@ -20,7 +25,7 @@ export default class ExperimentListRow extends React.Component {
                 times: ['1521644070840', '1521644182665'],
                 time_selected: 0,
                 status: false,
-                experiment_id: 0
+                experiment_id: 1111
             }
         }
 
@@ -43,7 +48,7 @@ export default class ExperimentListRow extends React.Component {
     }
 
     studyExperiment = () => {
-        console.log(this.state.default_value.experiment_id)
+        window.open(`/#/${this.state.user.user_id}/experiment/${this.state.default_value.experiment_id}`, '_blank')
     }
 
     bookExperiment = () => {
@@ -121,7 +126,7 @@ export default class ExperimentListRow extends React.Component {
                     >
                         <MenuItem value={0} label="请选择实验时间" primaryText="请选择实验时间" disabled />
                         {default_value.times.map((value, index) => 
-                            < MenuItem key = { index }  value = { value } primaryText = {(new Date(Number(value))).toLocaleString()}/>
+                            < MenuItem key={index} value={value} primaryText={Moment(Number(value)).format("ll h:mm a")}/>
                         )}
                     </DropDownMenu>
                 </TableRowColumn>

@@ -8,3 +8,39 @@
      font-size: 18px !important;
      font-weight: bold;
 }
+
+.search_component {
+    width: 512px;
+    display: flex;
+    flex-direction: row;
+    height: 40px;
+    font-size: 14px;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, .22);
+    margin: 8px 0 8px -256px;
+}
+
+.search_component .material-icons {
+    height: 40px !important;
+    color: #bec7e6;
+    line-height: 40px;
+    margin: 0 10px;
+}
+
+.search_component input {
+    width: 100%;
+    height: 100%;
+    outline: none !important;
+    background-color: transparent !important;
+    border: none !important;
+    font-size: 12px;
+    font-weight: bold;
+    color: #bec7e6;
+}
+
+.search_component input::placeholder {
+    color: #bec7e6;
+}

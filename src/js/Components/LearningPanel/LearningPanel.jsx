@@ -7,6 +7,10 @@ export default class LearningPanel extends React.Component {
     constructor() {
         super()
         this.state = {
+            user: {
+                user_id: 12345,
+                user_name: '木村拓哉'
+            },
             reservations_list: [{
                     name: '边界层实验',
                     location: '教四 303',
@@ -61,7 +65,7 @@ export default class LearningPanel extends React.Component {
 
 
     studyExperiment = (experiment_id, event) => {
-        console.log(experiment_id)
+        window.open(`/#/${this.state.user.user_id}/experiment/${experiment_id}`, '_blank')
     }
     
 

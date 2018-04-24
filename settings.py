@@ -16,6 +16,9 @@ from ext import setup_logger
 PROJECT_ROOT = osp.abspath(osp.dirname(__file__))
 PROJECT_NAME = osp.basename(PROJECT_ROOT)
 
+DB_HOST = '127.0.0.1'
+DB_USERNAME = 'root'
+DB_PASSWORD = 'root123'
 
 settings = {
     "static_version": str(int(time.time())),
@@ -31,5 +34,38 @@ settings = {
     'login_url': '/auth/login',
 }
 
+ACCOUNT_DB_LIST = {
+    "host": DB_HOST,
+    "port": 3306,
+    "username": DB_USERNAME,
+    "password": DB_PASSWORD,
+    "dbname": "account",
+    'charset': "utf8",
+}
 
+EXPERIMENT_DB_LIST = {
+    "host": DB_HOST,
+    "port": 3306,
+    "username": DB_USERNAME,
+    "password": DB_PASSWORD,
+    "dbname": "experiment",
+    'charset': "utf8",
+}
 
+EXPERIMENT_BOOK_DB_LIST = {
+    "host": DB_HOST,
+    "port": 3306,
+    "username": DB_USERNAME,
+    "password": DB_PASSWORD,
+    "dbname": "experiment_book",
+    'charset': "utf8",
+}
+
+EXPERIMENT_PUBLISH_DB_LIST = {
+    "host": DB_HOST,
+    "port": 3306,
+    "username": DB_USERNAME,
+    "password": DB_PASSWORD,
+    "dbname": "experiment_publish",
+    'charset': "utf8",
+}

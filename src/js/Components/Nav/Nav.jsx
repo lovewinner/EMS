@@ -7,6 +7,7 @@ import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
+
 export default class Nav extends React.Component {
     constructor() {
         super()
@@ -29,6 +30,10 @@ export default class Nav extends React.Component {
                         </Chip>
                     </span>
                     }
+                style={{
+                    position: 'fixed',
+                    top: '0'
+                }}
             />
         )
     }
