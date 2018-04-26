@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import Loading from "./Components/Loading/Loading";
-import BannerURL from '../images/google.png'
+import BannerImage from '../images/grid_seamless.png'
 
 import '../css/materialize.min'
 import '../css/fonts'
@@ -53,7 +53,16 @@ class Login extends React.Component {
         const cardImageStyle = {
             marginBottom: "1em",
             marginLeft: "-.75em",
-            marginRight: "-.75em"
+            marginRight: "-.75em",
+            height: "13.5em",
+            backgroundImage: `url(${BannerImage})`,
+            backgroundPosition: 'right 1px top -4px;',
+            backgroundRepeat: 'repeat',
+            backgroundSize: "19px",
+        }
+
+        const ImageStyle = {
+
         }
 
         const class_names_submit = (() => {
@@ -68,8 +77,7 @@ class Login extends React.Component {
             <div class="row">
                 <div class="card middle col s4 offset-s4" style={{marginTop: "10%"}}>
                     <div class="card-image" style={cardImageStyle}>
-                        <img src={BannerURL} />
-                        <div class="card-title">
+                        <div class="card-title" style={{color: '#565656'}}>
                             <h4>登陆</h4>
                             <h5 style={{fontSize: ".83em"}}>动力工程系试验管理平台</h5>
                         </div>

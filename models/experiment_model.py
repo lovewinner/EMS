@@ -2,7 +2,10 @@
 # -*- coding: utf-8 -*-
 import json
 
-from mysql_dal.models.base_model import *
+import sys
+sys.path.append("..")
+
+from utils.mysql.models.base_model import *
 
 class ExperimentModel(BaseModel) :
 
