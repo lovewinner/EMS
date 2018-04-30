@@ -51,3 +51,32 @@ class ExperimentModel(BaseModel) :
             ]
         }
     }
+
+    def __init__(self, db_list, db_conn_retry):
+        BaseModel.__init__(self, db_list, db_conn_retry)
+
+
+    # Experiment
+    def add_experiment(self, insert_param):
+        return self._insert_table(table_name = 'experiment', insert_param = insert_param)
+
+    def get_experiments(self):
+        return self._select_table(table_name = 'experiment', select_param = '1')
+
+    def get_experiments_by_name(self, experiment_name):
+        select_param = {
+            "experiment_name": experiment_name
+        }
+        return self._select_table(table_name='experiment', select_param=select_param)    
+
+    def update_experiment_by_id(self, experiment_id, update_param):
+        keys = {
+            "experiment_id": experiment_id
+        }
+        return self._update_table_by_key(table_name = 'experiment', keys = keys, update_param = update_param)
+
+    def delete_experiment_by_id(self, experiment_id):
+        keys = {
+            "experiment_id": experiment_id
+        }
+        return self._delete_table_by_key(table_name = 'experiment', keys = keys)

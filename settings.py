@@ -9,9 +9,7 @@ import hashlib
 from tornado_lib.base import BaseHandler
 import logging
 import logging.config
-import lib_settings
 import time
-from ext import setup_logger
 
 PROJECT_ROOT = osp.abspath(osp.dirname(__file__))
 PROJECT_NAME = osp.basename(PROJECT_ROOT)
@@ -34,38 +32,16 @@ settings = {
     'login_url': '/auth/login',
 }
 
-ACCOUNT_DB_LIST = {
-    "host": DB_HOST,
-    "port": 3306,
-    "username": DB_USERNAME,
-    "password": DB_PASSWORD,
-    "dbname": "account",
-    'charset': "utf8",
-}
+DB_CONFIGURE = [
+    {
+        "host": DB_HOST,
+        "port": 3306,
+        "username": DB_USERNAME,
+        "password": DB_PASSWORD,
+        "dbname": "EMS",
+        "charset": "utf8",
+        "is_master": True,
+    }
+]
 
-EXPERIMENT_DB_LIST = {
-    "host": DB_HOST,
-    "port": 3306,
-    "username": DB_USERNAME,
-    "password": DB_PASSWORD,
-    "dbname": "experiment",
-    'charset': "utf8",
-}
-
-EXPERIMENT_BOOK_DB_LIST = {
-    "host": DB_HOST,
-    "port": 3306,
-    "username": DB_USERNAME,
-    "password": DB_PASSWORD,
-    "dbname": "experiment_book",
-    'charset': "utf8",
-}
-
-EXPERIMENT_PUBLISH_DB_LIST = {
-    "host": DB_HOST,
-    "port": 3306,
-    "username": DB_USERNAME,
-    "password": DB_PASSWORD,
-    "dbname": "experiment_publish",
-    'charset': "utf8",
-}
+DB_CONN_RETRY = 3

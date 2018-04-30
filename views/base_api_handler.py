@@ -3,7 +3,7 @@ import random
 import uuid
 from tornado_lib.base import BaseHandler
 from tornado_lib.routes import route
-from tornado.util import bytes_type, unicode_type, basestring_type, u
+from tornado.util import bytes_type, unicode_type
 
 
 _TO_UNICODE_TYPES = (unicode_type, type(None))
