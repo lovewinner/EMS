@@ -5,3 +5,6 @@ node_modules/*
 
 # ignore virtualenv files
 .emsenv/*
+
+# ignore python model require file
+*.pyc
