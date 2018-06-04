@@ -14,10 +14,6 @@ import time
 PROJECT_ROOT = osp.abspath(osp.dirname(__file__))
 PROJECT_NAME = osp.basename(PROJECT_ROOT)
 
-DB_HOST = '127.0.0.1'
-DB_USERNAME = 'root'
-DB_PASSWORD = 'root123'
-
 settings = {
     "static_version": str(int(time.time())),
     "static_path": osp.join(PROJECT_ROOT, "static"),
@@ -34,10 +30,10 @@ settings = {
 
 DB_CONFIGURE = [
     {
-        "host": DB_HOST,
+        "host": '127.0.0.1',
         "port": 3306,
-        "username": DB_USERNAME,
-        "password": DB_PASSWORD,
+        "username": 'root',
+        "password": 'root123',
         "dbname": "EMS",
         "charset": "utf8",
         "is_master": True,

@@ -13,6 +13,3 @@ class BaseAPIHandler(BaseHandler):
     
     def __init__(self, *args, **kwargs):
         BaseHandler.__init__(self, *args, **kwargs)
-
-    def test(self, message):
-        return 'This is the base API handler, return the message "%s"' % message

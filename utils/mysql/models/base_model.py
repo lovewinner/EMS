@@ -44,7 +44,6 @@ class MyCursor(object):
                     self.connect()
                 return self._cursor.execute(*args, **kwargs)
             except _mysql_exceptions.OperationalError as e:
-                #2014 for https://easilydo.atlassian.net/browse/SIFT-595
                 logging.warning("run fail[e: %s, args: %s, kwargs: %s]", e, args, kwargs)
                 if e[0] in [2013, 2006, 2014]:
                     self._base_model.db_free()
@@ -306,7 +305,7 @@ class BaseModel(object):
             sql += ' FORCE INDEX(`%s`)' % force_index
         if 'str' == type(select_param['where']).__name__ or 'unicode' == type(select_param['where']).__name__:
             sql += " WHERE %s" % select_param['where']
-        #if 'dict' == type(select_param['where']).__name__ :
+
         if isinstance(select_param['where'], dict) and {} != select_param['where']:
             sql += self.__gen_where(select_param['where'])
         if select_param.get('order_by') :
@@ -347,142 +346,6 @@ class BaseModel(object):
         else :
             return None
 
-
-    @classmethod
-    def gen_create_table_sql(self, table_define) :
-        """
-        tool method can gen the create table from table_define.
-        """
-        #sql demo
-        #DROP TABLE IF EXISTS `moyi_user_avatar`;
-        #CREATE TABLE `moyi_user_avatar` (
-        #        `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-        #        `username` varchar(255) NOT NULL,
-        #        `phone` varchar(255) NOT NULL,
-        #        `address` varchar(255) NOT NULL,
-        #        `contact_id` varchar(255) NOT NULL,
-        #        `avatar_data` text NOT NULL,
-        #        `avatar_resize_s` mediumblob NOT NULL,
-        #        PRIMARY KEY (`id`),
-        #        UNIQUE KEY `username` (`username`)
-        #        ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-        #
-        # table_define = {
-        #       'table_name' : 'user_contact',
-        #       'table_primary_key' : ['user_id', 'contact_id'],
-        #       'table_indexs' : [{'query_by_phone':['phone']},{'query_by_phone_address':['phone','address']}],
-        #       'table_uniques' : [{'unique_username':['username']},{'unique_contact_id':['contact_id']}],
-        #       'table_fields' : [
-        #           ('`user_id`', 'int(10) unsigned', 'NOT NULL', 'AUTO_INCREMENT'),
-        #           ('`username`', 'varchar(255)', 'NOT NULL'),
-        #           ('`phone`', 'varchar(255)', 'NOT NULL'),
-        #           ('`address`', 'varchar(255)', 'NOT NULL'),
-        #           ('`contact_id`', 'varchar(255)', 'NOT NULL'),
-        #           ('`avatar_data`', 'text', 'NOT NULL'),
-        #           ('`avatar_resize_s`', 'mediumblob', 'NOT NULL'),
-        #       ],
-        #       'sharding_needed' : False,
-        #       'sharding_method' : 'SegmentSharding',
-        #       'sharding_seg_key' : 'user_id',
-        #       'sharding_seg_per_table' : 100000,
-        #       'sharding_seg_table_num' : 10,
-        # }
-        table_names = []
-        range_num = 0
-        sql = ""
-        if table_define['sharding_needed'] :
-            if 'SegmentSharding' == table_define['sharding_method'] :
-                for i in range(0, table_define['sharding_seg_table_num']) :
-                    table_names.append("%s_%d" % (table_define['table_name'], i))
-                    range_num = table_define['sharding_seg_table_num']
-            elif 'DateSharding' == table_define['sharding_method'] :
-                start_date = table_define['sharding_start_date']
-                if start_date:
-                    try:
-                        start_dt = datetime.datetime.strptime(date_str, "%Y-%m-%d")
-                    except:
-                        start_dt = datetime.datetime.now()
-                else:
-                    start_dt = datetime.datetime.now()
-                for i in range(0, table_define['sharding_date_table_num']) :
-                    dt = start_dt + datetime.timedelta(days=i)
-                    table_names.append("%s_%s" % (table_define['table_name'], dt.strftime("%Y_%m_%d")))
-                range_num = table_define['sharding_date_table_num']
-            elif 'TimeVersionSharding' == table_define['sharding_method'] :
-                # create meta
-                sql = ("DROP TABLE IF EXISTS `%s_table_meta`;" % table_define['table_name']) + self.__GEN_LINE_BREAK
-                sql += ("CREATE TABLE `%s_table_meta` (" % table_define['table_name']) + self.__GEN_LINE_BREAK
-                sql += (" `%s` varchar(255) NOT NULL DEFAULT ''," % 'table_name') + self.__GEN_LINE_BREAK
-                sql += (" `%s` text NOT NULL," % 'meta_object') + self.__GEN_LINE_BREAK
-                sql += (" `%s` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'," % 'insert_time') + self.__GEN_LINE_BREAK
-                sql += (" `%s` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'," % 'update_time') + self.__GEN_LINE_BREAK
-                sql += ("PRIMARY KEY (`%s`)" % 'table_name') + self.__GEN_LINE_BREAK
-                sql += ") ENGINE=InnoDB DEFAULT CHARSET=utf8;" + self.__GEN_LINE_BREAK
-                # insert init meta data
-                meta_dict = {}
-                for (k,v) in table_define['sharding_time_interval'].items() :
-                    meta_dict[k] = {}
-                    meta_dict[k]['start_time'] = 0
-                    meta_dict[k]['count'] = 0
-                    meta_dict[k]['last_create_time'] = 0
-                meta_object = json.dumps(meta_dict)
-                sql += ("INSERT INTO `%s_table_meta` (`table_name`,`meta_object`) VALUES('%s', '%s');" % (table_define['table_name'], table_define['table_name'], meta_object)) + self.__GEN_LINE_BREAK
-                sql += self.__GEN_LINE_BREAK
-                sql += self.__GEN_LINE_BREAK
-                table_names.append(table_define['table_name'])
-                range_num = 1
-            elif 'ConsistentHashSharding' == table_define['sharding_method'] :
-                range_num = table_define['sharding_ch_table_num']
-                for i in range(0, range_num) :
-                    table_names.append("%s_%d" % (table_define['table_name'], i))
-        else :
-            table_names.append(table_define['table_name'])
-            range_num = 1
-
-        for i in range(0, range_num) :
-            if i > 0:
-                sql += ("CREATE TABLE `%s` like `%s`;" % (table_names[i], table_names[0])) + self.__GEN_LINE_BREAK
-                continue
-            sql += ("CREATE TABLE `%s` (" % table_names[i]) + self.__GEN_LINE_BREAK
-            #table field
-            for field in table_define['table_fields'] :
-                line = ""
-                for v in field :
-                    line += (" %s" % v)
-                sql += ("%s," % line) + self.__GEN_LINE_BREAK
-            #primary key
-            line = ""
-            for v in table_define['table_primary_key'] :
-                line += " `%s`," % v
-            line = line.rstrip(",")
-            sql += ("PRIMARY KEY (%s)," % line) + self.__GEN_LINE_BREAK
-            #index
-            if table_define.has_key('table_indexes') :
-                for index in table_define['table_indexes'] :
-                    line = "INDEX %s (" % index.items()[0][0]
-                    for v in index.items()[0][1] :
-                        line += (" `%s`," %v)
-                    line = line.rstrip(",") + ")"
-
-                    sql += ("%s, " % line) + self.__GEN_LINE_BREAK
-            #uniqe
-            if table_define.has_key('table_uniques') :
-                for index in table_define['table_uniques'] :
-                    line = "UNIQUE %s (" % index.items()[0][0]
-                    for v in index.items()[0][1] :
-                        line += (" `%s`," %v)
-                    line = line.rstrip(",") + ")"
-
-                    sql += ("%s, " % line) + self.__GEN_LINE_BREAK
-            sql = sql.rstrip()
-            sql = sql.rstrip(",") + self.__GEN_LINE_BREAK
-            if 'utf8' == self._charset :
-                sql += ") ENGINE=InnoDB DEFAULT CHARSET=utf8;  " + self.__GEN_LINE_BREAK
-            elif 'utf8mb4' == self._charset :
-                sql += ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;  " + self.__GEN_LINE_BREAK
-            sql += self.__GEN_LINE_BREAK
-        return sql
-
     def _insert_table(self, table_name, insert_param):
         self._change_to_master()
         input_param = {
@@ -513,7 +376,6 @@ class BaseModel(object):
     def _select_table(self, table_name, select_param, limit=None, order_by=None, fields=None, **kwargs):
         # get database
         self._get_db()
-
 
         select_param = {
             'table_name': table_name,

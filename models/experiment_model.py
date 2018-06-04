@@ -68,7 +68,13 @@ class ExperimentModel(BaseModel) :
         select_param = {
             "experiment_name": experiment_name
         }
-        return self._select_table(table_name=self.TABLE_NAME_EXPERIMENT, select_param=select_param)    
+        return self._select_table(table_name = self.TABLE_NAME_EXPERIMENT, select_param = select_param)    
+
+    def get_experiment_by_experiment_id(self, experiment_id):
+        select_param = {
+            "experiment_id": experiment_id
+        }
+        return self._select_table(table_name = self.TABLE_NAME_EXPERIMENT, select_param = select_param)
 
     def update_experiment_by_experiment_id(self, experiment_id, update_param):
         keys = {
@@ -86,6 +92,9 @@ class ExperimentModel(BaseModel) :
     def add_experiment_book(self, insert_param):
         return self._insert_table(table_name = self.TABLE_NAME_EXPERIMENT_BOOK, insert_param = insert_param)
 
+    def get_experiments_book(self):
+        return self._select_table(table_name = self.TABLE_NAME_EXPERIMENT_BOOK, select_param = '1')
+
     def get_experiment_book_by_user_id(self, user_id):
         select_param = {
             "user_id": user_id
@@ -102,11 +111,14 @@ class ExperimentModel(BaseModel) :
         keys = {
             "book_id": book_id
         }
-        return self._delete_table_by_key(table_name=self.TABLE_NAME_EXPERIMENT, keys=keys)
+        return self._delete_table_by_key(table_name=self.TABLE_NAME_EXPERIMENT_BOOK, keys=keys)
 
     # Experiment Publish
     def add_experiment_publish(self, insert_param):
         return self._insert_table(table_name=self.TABLE_NAME_EXPERIMENT_PUBLISH, insert_param=insert_param)
+
+    def get_experiments_publish(self):
+        return self._select_table(table_name = self.TABLE_NAME_EXPERIMENT_PUBLISH, select_param = '1')
 
     def get_experiment_publish_by_experiment_id(self, experiment_id):
         select_param = {

@@ -8,3 +8,5 @@ node_modules/*
 
 # ignore python model require file
 *.pyc
+*/*.pyc
+*/*/*.pyc

@@ -57,7 +57,7 @@ class AccountModel(BaseModel):
         else:
             return self.ERROR_MESSAGE_NOT_USERNAME
         
-    def update_account_info(self, user_id, update_param):
+    def update_account_info_by_user_id(self, user_id, update_param):
         keys = {
             "user_id": user_id
         }
