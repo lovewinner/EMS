@@ -8,5 +8,7 @@ node_modules/*
 
 # ignore python model require file
 *.pyc
-*/*.pyc
-*/*/*.pyc
+
+# ignore upload files
+
+static/uploads/*

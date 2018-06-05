@@ -8,10 +8,4 @@ from views.base_api_handler import BaseAPIHandler as BaseHandler
 @route('/')
 class home(BaseHandler):
     def get(self):
-        message = self.test("Hello World")
-
-        rst = {
-            "title": "首页 - ",
-            "message": message
-        }
-        self.render('layout.html', data = rst)
+        self.render('layout.html', title = "首页 - ")
