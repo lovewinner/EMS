@@ -6,6 +6,7 @@ jsonrpclib==0.1.7
 MySQL-python==1.2.5
 python-dateutil==2.7.2
 pytz==2018.4
+re3==0.2.23
 redis==2.10.6
 singledispatch==3.4.0.3
 six==1.11.0
